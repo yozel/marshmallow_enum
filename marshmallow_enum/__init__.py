@@ -13,6 +13,12 @@ class EnumField(Field):
         self.by_value = by_value
         super(EnumField, self).__init__(*args, **kwargs)
 
+    def _jsonschema_type_mapping(self):
+        return {
+            'type': 'string',
+            'enum': [e.value for e in self.enum]
+        }
+
     def _serialize(self, value, attr, obj):
         if value is None:
             return None
